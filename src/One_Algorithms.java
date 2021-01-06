@@ -17,7 +17,7 @@ public class One_Algorithms extends JFrame implements ActionListener {
 	JButton btnDda = new JButton("DDA");
 	JButton btnDda_circle = new JButton("DDA_circle");
 	JButton btnBres_line = new JButton("Bresenham_line");
-	JButton btnBres_circle = new JButton("Bresenham_circle");
+	JButton btnbres_eclipse = new JButton("Bresenham_eclipse");
 	DrawArea area = new DrawArea();
 	//declare panel
 	JPanel pnlUp;
@@ -40,14 +40,14 @@ public class One_Algorithms extends JFrame implements ActionListener {
 		pnlDown.add(btnDda);
 		pnlDown.add(btnDda_circle);
 		pnlDown.add(btnBres_line);
-		pnlDown.add(btnBres_circle);
+		pnlDown.add(btnbres_eclipse);
 		
 
 		//register action of button
 		btnDda.addActionListener(this);
 		btnDda_circle.addActionListener(this);
 		btnBres_line.addActionListener(this);
-		btnBres_circle.addActionListener(this);
+		btnbres_eclipse.addActionListener(this);
 	}	
 
 	public void actionPerformed(ActionEvent evt) {
@@ -62,8 +62,8 @@ public class One_Algorithms extends JFrame implements ActionListener {
 		} else if (str.equals("Bresenham_line")) {
 			//draw bresenham
 			area.draw("bres");
-		}  else if (str.equals("Bresenham_circle")) {
-			area.draw("bres_circle");
+		}  else if (str.equals("Bresenham_eclipse")) {
+			area.draw("bres_eclipse");
 		}; 
 	}
 }
@@ -76,7 +76,7 @@ class DrawArea extends Canvas {
 
 	public void paint(Graphics g) 
 	{
-		int x1=10, y1=10, x2=getSize().width-20, y2=getSize().height-20;
+		int x1=10, y1=getSize().height-20, x2=getSize().width-20, y2=10;
 		if (shape.equals("dda")) {
 			g.setColor(new Color(random(256), random(256), random(256)));
 			dda(g, x1, y1, x2, y2);
@@ -85,8 +85,8 @@ class DrawArea extends Canvas {
 			g.setColor(new Color(random(256), random(256), random(256)));
 			Bresenham(g, x1, y1, x2, y2);
 		} 
-		else if (shape.equals("bres_circle")) {
-			Bresenham_circle(g, x1, y1, x2, y2);
+		else if (shape.equals("bres_eclipse")) {
+			Bresenham_eclipse(g, x1, y1, x2, y2);
 		} 
 		else if (shape.equals("dda_circle")) {
 			dda_circle(g, getSize().width / 2, getSize().height / 2, 250);
@@ -128,17 +128,17 @@ class DrawArea extends Canvas {
 	     } while((yc1-sy)<d || (sx-xc1)>d); /* 판별식 d가 이 범위에 있을때까지 반복 */
 		
 	}
-	private void Bresenham_circle(Graphics g, int x0, int y0, int x1, int y1) {
+	private void Bresenham_eclipse(Graphics g, int x0, int y0, int x1, int y1) {
 		
-		int a = (x1-x0), b = (y1-y0), b1 = b&1; /* 지름 값 */
-		long dx = 4*(1-a)*b*b, dy = 4*(b1+1)*a*a; /* deltaX와 deltaY */
-		long err = dx+dy+b1*a*a, e2; /* 1단계 오류 */
+		int delta_x = Math.abs(x1-x0), delta_y = Math.abs(y1-y0), b1 = delta_y&1; /* 지름 값 */
+		long dx = 4*(1-delta_x)*delta_y*delta_y, dy = 4*(b1+1)*delta_x*delta_x; /* deltaX와 deltaY */
+		long err = dx+dy+b1*delta_x*delta_x, e2; /* 1단계 오류 */
 
 		/* 교환된 점으로 호출할 경우 */
-		if (x0 > x1) { x0 = x1; x1 += a; } 
+		if (x0 > x1) { x0 = x1; x1 += delta_x; } 
 		if (y0 > y1) y0 = y1;
-		y0 += (b+1)/2; y1 = y0-b1;   // 시작픽셀
-		a *= 8*a; b1 = 8*b*b;
+		y0 += (delta_y+1)/2; y1 = y0-b1;   // 시작픽셀
+		delta_x *= 8*delta_x; b1 = 8*delta_y*delta_y;
 
 		do {
 			putPixel(g, x1, y0); /* 1 사분면 */
@@ -146,11 +146,11 @@ class DrawArea extends Canvas {
 			putPixel(g, x0, y1); /* 3 사분면 */
 			putPixel(g, x1, y1); /* 4 사분면 */
 		    e2 = 2*err;
-		    if (e2 <= dy) { y0++; y1--; err += dy += a; } // y 단계
+		    if (e2 <= dy) { y0++; y1--; err += dy += delta_x; } // y 단계
 		    if (e2 >= dx || 2*err > dy) { x0++; x1--; err += dx += b1; } // x 단계
 		} while (x0 <= x1);
 		   
-		while (y0-y1 < b) {  /* 타원이 끝내려고 하는 조건문 */
+		while (y0-y1 < delta_y) {  /* 타원이 끝내려고 하는 조건문 */
 			putPixel(g, x0-1, y0); /* -> 타원 끝내기 */
 			putPixel(g, x1+1, y0++); 
 			putPixel(g, x0-1, y1);
@@ -210,8 +210,8 @@ class DrawArea extends Canvas {
 		
 		// 기울기 0 <= m <= 1로 가정
 		// (1)초기 값을 구한다.
-		int delta_x = xb - xa; // deltaX 
-		int delta_y = yb - ya; // deltaY
+		int delta_x = Math.abs(xb - xa); // deltaX 
+		int delta_y = Math.abs(yb - ya); // deltaY
 		int temp_y = ya; // y의 증가로 인한 저장 변수
 		
 		int p1 = 2 * delta_y - delta_x; // 처음 판별식
@@ -225,7 +225,7 @@ class DrawArea extends Canvas {
 			if (p1 < 0) { // 판별식(1)
 				p1 += c1;
 			} else {
-				++temp_y; // 판별식(2)
+				--temp_y; // 판별식(2)
 				p1 += c2;
 			}
 		}

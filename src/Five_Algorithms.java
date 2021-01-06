@@ -32,7 +32,7 @@ public class Five_Algorithms extends JFrame {
 class DrawArea2 extends Canvas {
 	private int fir_X, fir_Y, las_X, las_Y = 0; // 첫번째 두번째 좌표
 	private int chk_point = 0; // 첫번째 점, 두번쨰 점인지 확인하기 위함
-	static int xLeft=50, xRight=700, yBottom=50, yTop=500; // 사각형 좌표 ( 이 외의 좌표들은 클립할 예정 )
+	static int Left=50, Right=700, Bottom=50, Top=500; // 사각형 좌표 ( 이 외의 좌표들은 클립할 예정 )
 	Point P0,P1; // 현재 점을 기억할 2개의 변수를 저장
 	
 	DrawArea2() { 
@@ -52,7 +52,7 @@ class DrawArea2 extends Canvas {
 	
 	public void paint(Graphics g) {
 		g.setColor(Color.RED);
-		g.drawRect((int)xLeft, (int)yBottom, (int)(xRight-xLeft), (int)(yTop-yBottom));
+		g.drawRect((int)Left, (int)Bottom, (int)(Right-Left), (int)(Top-Bottom));
 		g.setColor(Color.YELLOW);
 		try {
 			if(CohenSutherland(P0,P1)) // 라인그리기
@@ -91,17 +91,17 @@ class DrawArea2 extends Canvas {
 			// x = x1 + (1 / slope) * (y - y1) 
 			// y = y1 + slope * (x - x1)
 			if ((outCode0 & 1) != 0 ) {  // top이 초과할 경우
-				P0.x += (P1.x - P0.x)*(yTop - P0.y)/(P1.y - P0.y); // x = x1 + (1 / slope) * (y - y1) 
-				P0.y = yTop;
+				P0.x += (P1.x - P0.x)*(Top - P0.y)/(P1.y - P0.y); // x = x1 + (1 / slope) * (y - y1) 
+				P0.y = Top;
 			} else if((outCode0 & 2) != 0 ) { 
-				P0.x += (P1.x - P0.x)*(yBottom - P0.y)/(P1.y - P0.y); // x = x1 + (1 / slope) * (y - y1) 
-				P0.y = yBottom;
+				P0.x += (P1.x - P0.x)*(Bottom - P0.y)/(P1.y - P0.y); // x = x1 + (1 / slope) * (y - y1) 
+				P0.y = Bottom;
 			} else if((outCode0 & 4) != 0 ) { 
-				P0.y += (P1.y - P0.y)*(xRight - P0.x)/(P1.x - P0.x); // y = y1 + slope * (x - x1)
-				P0.x = xRight;
+				P0.y += (P1.y - P0.y)*(Right - P0.x)/(P1.x - P0.x); // y = y1 + slope * (x - x1)
+				P0.x = Right;
 			} else if((outCode0 & 8) != 0 ) { 
-				P0.y += (P1.y - P0.y)*(xLeft - P0.x)/(P1.x - P0.x); // y = y1 + slope * (x - x1)
-				P0.x = xLeft;
+				P0.y += (P1.y - P0.y)*(Left - P0.x)/(P1.x - P0.x); // y = y1 + slope * (x - x1)
+				P0.x = Left;
 			}
 		} 
 	} 
@@ -109,11 +109,11 @@ class DrawArea2 extends Canvas {
 	private static int outLine(Point P) { /* 8421로 표현하여 초과하는 라인을 영역으로 표시함   */
 		int Code = 0; 
 		try {
-			if(P.y > yTop) Code += 1;			 // 1 is top
-			else if(P.y < yBottom) Code += 2; 	// 2 is bottom
+			if(P.y > Top) Code += 1;			 // 1 is top
+			else if(P.y < Bottom) Code += 2; 	// 2 is bottom
 
-			if(P.x > xRight) Code += 4;			 // 4 is right
-			else if(P.x < xLeft) Code += 8; 	// 8 is left 
+			if(P.x > Right) Code += 4;			 // 4 is right
+			else if(P.x < Left) Code += 8; 	// 8 is left 
 		} catch(Exception e) {
 			
 		}

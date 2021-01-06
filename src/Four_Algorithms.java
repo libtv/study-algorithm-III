@@ -130,7 +130,7 @@ class CanvasArea2 extends Canvas {
 	/* Scale 함수 */
 	void drawPolygon_S(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3, double Scale) {
 		//이동 + 신축 + (역)이동
-		int random = random(3) + 1;
+		int random = random(3) + 1;  // 랜덤함수로 임의의 점 선택
 		int randomX = 0, randomY = 0;
 		if (random == 1) {
 			randomX=x1; 
@@ -148,9 +148,9 @@ class CanvasArea2 extends Canvas {
 		int result_first[]; int result_second[]; int result_last[];
 		int[] xy_first = {x1, y1, 1}; int[] xy_second = {x2, y2, 1}; int[] xy_last = {x3, y3, 1};
 		
-		result_first = productMatrix(a, xy_first);
-		result_second = productMatrix(a, xy_second);
-		result_last = productMatrix(a, xy_last);
+		result_first = productMatrix(a, xy_first); 		//이동
+		result_second = productMatrix(a, xy_second); 	//신축
+		result_last = productMatrix(a, xy_last); 		//역이동
 		
 		int x[] = {result_first[0]*pixelSize, result_second[0]*pixelSize, result_last[0]*pixelSize};
 		int y[] = {result_first[1]*pixelSize, result_second[1]*pixelSize, result_last[1]*pixelSize};
@@ -163,7 +163,7 @@ class CanvasArea2 extends Canvas {
 	/* Rotation 함수 */
 	void drawPolygon_R(Graphics g, int x1, int y1, int x2, int y2, int x3, int y3, double Rotation) {
 		int random = random(3) + 1;
-		int randomX = 0, randomY = 0;
+		int randomX = 0, randomY = 0; //랜덤
 		if (random == 1) {
 			randomX=x1; 
 			randomY=y1;
@@ -184,9 +184,9 @@ class CanvasArea2 extends Canvas {
 		
 		double[][] s = productMatrix2(first_a, a);
 		
-		result_first = productMatrix(s, xy_first);
-		result_second = productMatrix(s, xy_second);
-		result_last = productMatrix(s, xy_last);
+		result_first = productMatrix(s, xy_first); 		//이동
+		result_second = productMatrix(s, xy_second);	//회전
+		result_last = productMatrix(s, xy_last);		//역이동
 		
 		int x[] = {result_first[0]*pixelSize, result_second[0]*pixelSize, result_last[0]*pixelSize};
 		int y[] = {result_first[1]*pixelSize, result_second[1]*pixelSize, result_last[1]*pixelSize};

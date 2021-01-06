@@ -179,7 +179,10 @@ class CanvasArea extends Canvas {
 		return answer;
 	}
 
-	// gird 그리는 함수
+	/* 
+	 * gird 그리는 함수
+	 * 좌표를 그리는 함수이므로 생략하겠습니다.
+	 */
 	private void paintCoordinateSystem(Graphics g) {
 
 		g.setColor(Color.WHITE);

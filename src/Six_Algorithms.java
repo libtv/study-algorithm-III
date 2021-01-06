@@ -63,13 +63,12 @@ class DrawArea5 extends Canvas {
 
 	}
 	
-
+	/* LiangBarsky 알고리즘
+	 * 참고문헌 https://www.cs.helsinki.fi/group/goa/viewing/leikkaus/intro.html
+	 * http://www.pracspedia.com/CG/liangbarsky.html
+	 * https://www.geeksforgeeks.org/liang-barsky-algorithm/
+	 */
 	static boolean LiangBarsky(Point P0, Point P1) {
-		/* LiangBarsky 알고리즘
-		 * 참고문헌 https://www.cs.helsinki.fi/group/goa/viewing/leikkaus/intro.html
-		 * http://www.pracspedia.com/CG/liangbarsky.html
-		 * https://www.geeksforgeeks.org/liang-barsky-algorithm/
-		 */
 		double t_min = 0, t_max = 1; // 처음 min값과 max값 설정
 		int dx = P1.x - P0.x, dy = P1.y - P0.y; // deltaX와 deltaY 계산
 		int p[] = {-dx, dx, -dy, dy}; // 

@@ -67,8 +67,8 @@ class DrawArea3 extends Canvas {
 		g.setColor(Color.green);
 	    Polygon p = new Polygon(); 
 	    for (int i = 0; i < 6; i++) { /* 다각형을 그리기 위한 점을 리스트에 추가함  */
-	    	p.addPoint((int) (100 + 50 * Math.cos(i * 2 * Math.PI / 6)), (int) (100 + 50 * Math.sin(i * 2 * Math.PI / 6)));
-	    	mVertices.add(new Point((int) (100 + 50 * Math.cos(i * 2 * Math.PI / 6)), (int) (100 + 50 * Math.sin(i * 2 * Math.PI / 6))));
+	    	p.addPoint((int) (100 + 100 * Math.cos(i * 2 * Math.PI / 6)), (int) (100 + 100 * Math.sin(i * 2 * Math.PI / 6)));
+	    	mVertices.add(new Point((int) (100 + 100 * Math.cos(i * 2 * Math.PI / 6)), (int) (100 + 100 * Math.sin(i * 2 * Math.PI / 6))));
 	    }
         for(int i = 0 ; i < mVertices.size() - 1; ++i) { /* 각 선분들을 EdgeList의 추가함  */
             Point current = mVertices.get(i);
